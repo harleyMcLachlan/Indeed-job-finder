@@ -1,5 +1,5 @@
 # Indeed-job-finder
-Fetch jobs from indeed, filter and display them in a GUI
+Fetch jobs from indeed, filter by language and keywords and display them in a GUI
 
 ## What this tool does
 This tool offers the user to filter jobs by language and filter out keywords. This is not possible on the indeed website.
@@ -15,6 +15,10 @@ For example: I want to find all English jobs in Berlin related to engineering in
 5. Add "software" and "QA" to the filter list. The next time you run the program it will filter job titles with these words.
 6. Clicking on the job will open the job page
 
-Dark grey means you have already seen this job
-Light grey means you have clicked the job
-Blue means new job
+![ex](https://lh3.googleusercontent.com/g3LK56uj-SnlQnSqgbkAeecfyzpti9uRuG2Opa9ZSTs262quwVRO6cZ-bDUHxZBJ_lO-1tFvOe71HEAFx6iRhMqAiKdX2AfKz0wJS5vP5xY_Fvpx08wFMAayBwxQ2a70dzva6Ky9uEI=w2400)
+
+Dark grey means you have already seen this job.
+Light grey means you have clicked the job.
+Blue means new job.
+
+**User friendliness updates coming soon. Currently just used for personal purposes**
