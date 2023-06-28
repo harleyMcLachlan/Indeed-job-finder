@@ -29,6 +29,23 @@ def closePopups(driver):
     except:
         pass
 
+    try:
+        closes = driver.find_elements(By.CSS_SELECTOR,"button[aria-label='schließen']")
+        if len(closes) > 0:
+            for close in closes:
+                close.click()
+    except:
+        pass
+
+    try:
+        closes = driver.find_elements(By.CSS_SELECTOR,"button[aria-label='close']")
+        if len(closes) > 0:
+            for close in closes:
+                close.click()
+    except:
+        pass
+    
+
 ###Get list of jobs on page            
 def getJobs(driver,window):
     closePopups(driver)
@@ -68,7 +85,12 @@ def nextPage(driver):
     if len(pages) == 0:
         return 0
     for page in pages:
-        page.click()
+        try:
+            page.click()
+        except:
+            time.sleep(0.5)
+            closePopups(driver)
+            page.click()
         elem=WebDriverWait(driver,5).until(EC.presence_of_element_located((By.CLASS_NAME,"job-snippet")))
     return 1
 
