@@ -4,7 +4,7 @@ This project was used as a way of learning Tkinter and Selenium. I chose this pr
 
 ## What this tool does
 This tool offers the user to filter jobs by language and filter out keywords. This is not possible on the indeed website.
-
+### How to use
 For example: I want to find all English jobs in Berlin related to engineering in the last 24 hours, but no software or QA.
 
 1. Open indeed.de and search "Engineering" in "Berlin", set filter to last 24 hours.
