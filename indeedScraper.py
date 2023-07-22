@@ -128,13 +128,6 @@ def jobBtnCall_openJobLink(btn,url):
 def XBtnCall_deleteJob(btn):
     btn.configure(fg_color="transparent")
 
-### Submits word to filtered word list
-def entryCall_submitWord(event):
-    file = open("filtered words.txt","a")
-    file.write("\n" + event.widget.get())
-    file.close()
-    wordFrame.createBtn(event)
-
 def readArguments():
     global url, debug
     # Remove 1st argument from the list of command line arguments
@@ -271,6 +264,14 @@ def windowSetup():
     for word in filteredWordList:
         wordFrame.loadWord(word)
 
+
+### Submits word to filtered word list
+def entryCall_submitWord(event):
+    file = open("filtered words.txt","a")
+    file.write("\n" + event.widget.get())
+    file.close()
+    global wordFrame
+    wordFrame.createBtn(event)
 ############################ MAIN #############################
 if __name__ == "__main__":
     readArguments()
