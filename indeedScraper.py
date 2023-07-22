@@ -1,5 +1,4 @@
-import tkinter as tk
-import time
+import time, sys, getopt
 import webbrowser
 from langdetect import detect
 from selenium import webdriver
@@ -9,11 +8,17 @@ from selenium.webdriver.support import expected_conditions as EC
 import customtkinter as ctk
 from webdriver_manager.chrome import ChromeDriverManager
 
+### Global Variables
+url = "https://de.indeed.com/jobs?q=engineer&l=Berlin&fromage=1&vjk=0a4a7664e5720982" #default link
+debug = False
+
 ### Main function to populate screen with jobs
 def populateJobs(driver,window):
 
     #OPENS indeed to engineer jobs in berlin last 24 hours
-    driver.get("https://de.indeed.com/jobs?q=engineer&l=Berlin&fromage=1&vjk=0a4a7664e5720982")
+    driver.get(url)
+    # driver.get("https://de.indeed.com/jobs?q=engineer&l=Berlin&fromage=3&vjk=954b9bfce9a8d819") # last 3 days
+    
 
     #Loops through each page
     while True:
@@ -130,6 +135,40 @@ def entryCall_submitWord(event):
     file.close()
     wordFrame.createBtn(event)
 
+def readArguments():
+    global url, debug
+    # Remove 1st argument from the list of command line arguments
+    argumentList = sys.argv[1:]
+
+    options = "hd:u:"
+    long_options = ["help", "debug=", "url="]
+    
+    try:
+        # Parsing argument
+        arguments, values = getopt.getopt(argumentList, options, long_options)
+
+        # checking each argument
+        for currentArgument, currentValue in arguments:
+    
+            if currentArgument in ("-h", "--help"):
+                print ("Commands:\n-h --help: display help\n-d --debug (t/true): turn debug mode on for faster tests\n-u --url (url): enter your indeed url")
+                exit()
+                
+            elif currentArgument in ("-u", "--url"):
+                url = currentValue
+
+            elif currentArgument in ("-d", "--debug"):
+                if currentValue in ("T","t","true","True"):
+                    print("Running in Debug mode")
+                    debug = True
+        
+    except getopt.error as err:
+        # output error, and return with an error code
+        print (str(err))
+
+    if url == "https://de.indeed.com/jobs?q=engineer&l=Berlin&fromage=1&vjk=0a4a7664e5720982":
+        print("WARNING: using default indeed link")
+
 ########################## GUI ############################
 class App(ctk.CTk):
     numResults = 0
@@ -234,8 +273,8 @@ def windowSetup():
 
 ############################ MAIN #############################
 if __name__ == "__main__":
-    debug = False
-
+    readArguments()
+    
     #get unwanted word filter list (case doesnt matter)
     file = open("filtered words.txt","r+")
     filteredWordList = file.read().splitlines()
