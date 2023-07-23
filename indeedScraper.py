@@ -45,19 +45,20 @@ def getJobs(driver,window):
 
 ### check title for filtered words and already seen jobs
 def checkTitle(titleElement,jobListing,window,jobFile):
-    jobTitle = trimMaxStrLen(titleElement.text) #shorten job title if needed
-
+    jobTitle = titleElement.text
+    jobTitleShort = trimMaxStrLen(jobTitle)                                                                 #shorten job title if needed
+    # jobCompany = jobListing.find_elements(By.CLASS_NAME,"companyName")[0]
     #check title for filtered words (makes everything lowercase for comparison)
-    if any(filteredWord.lower() in titleElement.text.lower() for filteredWord in filteredWordList):
+    if any(filteredWord.lower() in jobTitle.lower() for filteredWord in filteredWordList):
         return
     
     jobLinkElement = jobListing.find_elements(By.CLASS_NAME,"jcs-JobTitle")                                 #Get job link element
     
     #check titles for already seen jobs
     if any(alreadyOpenedJobTitles in jobTitle for alreadyOpenedJobTitles in alreadySeenJobsList):
-        window.my_frame.createBtn(jobTitle,jobLinkElement[0].get_attribute('href'),True)                    #If already seen, create greyed button
+        window.my_frame.createBtn(jobTitleShort,jobLinkElement[0].get_attribute('href'),True)               #If already seen, create greyed button
     else:
-        window.my_frame.createBtn(jobTitle,jobLinkElement[0].get_attribute('href'))                         #If not seen, create blue button
+        window.my_frame.createBtn(jobTitleShort,jobLinkElement[0].get_attribute('href'))                    #If not seen, create blue button
         jobFile.write(jobTitle + "\n")                                                                      #and write title to the seen jobs list
     
 ### goes to next page of jobs if possible
