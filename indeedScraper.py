@@ -280,12 +280,15 @@ if __name__ == "__main__":
     #get unwanted word filter list (case doesnt matter)
     file = open("filtered words.txt","r+")
     filteredWordList = file.read().splitlines()
+    filteredWordList[:] = [x for x in filteredWordList if x.strip()] #clear white lines.
     file.close()
 
     #open file to read unique already seen job titles"
     file = open("seen jobs.txt","r+")
     alreadySeenJobsList = file.read().splitlines()
+    alreadySeenJobsList[:] = [x for x in alreadySeenJobsList if x.strip()] #clear white lines.
     file.close()
+    print(alreadySeenJobsList)
     
     window = App()
     windowSetup()
