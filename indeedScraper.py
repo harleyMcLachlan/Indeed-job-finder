@@ -288,7 +288,6 @@ if __name__ == "__main__":
     alreadySeenJobsList = file.read().splitlines()
     alreadySeenJobsList[:] = [x for x in alreadySeenJobsList if x.strip()] #clear white lines.
     file.close()
-    print(alreadySeenJobsList)
     
     window = App()
     windowSetup()
