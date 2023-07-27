@@ -45,9 +45,11 @@ def getJobs(driver,window):
 
 ### check title for filtered words and already seen jobs
 def checkTitle(titleElement,jobListing,window,jobFile):
-    jobTitle = titleElement.text
-    jobTitleShort = trimMaxStrLen(jobTitle)                                                                 #shorten job title if needed
-    # jobCompany = jobListing.find_elements(By.CLASS_NAME,"companyName")[0]
+    jobTitle = titleElement.text                                                                          #shorten job title if needed
+    jobTitleShort = trimMaxStrLen(jobTitle)  
+    jobCompany = jobListing.find_elements(By.CLASS_NAME,"companyName")[0].text
+    jobTitleandCompany = jobTitle + " - " + jobCompany
+    jobTitleShortandCompany = jobTitleShort + " - " + jobCompany 
     #check title for filtered words (makes everything lowercase for comparison)
     if any(filteredWord.lower() in jobTitle.lower() for filteredWord in filteredWordList):
         return
@@ -55,11 +57,12 @@ def checkTitle(titleElement,jobListing,window,jobFile):
     jobLinkElement = jobListing.find_elements(By.CLASS_NAME,"jcs-JobTitle")                                 #Get job link element
     
     #check titles for already seen jobs
-    if any(alreadyOpenedJobTitles in jobTitle for alreadyOpenedJobTitles in alreadySeenJobsList):
-        window.my_frame.createBtn(jobTitleShort,jobLinkElement[0].get_attribute('href'),True)               #If already seen, create greyed button
+     
+    if any(alreadyOpenedJobTitles in jobTitleandCompany for alreadyOpenedJobTitles in alreadySeenJobsList):
+        window.my_frame.createBtn(jobTitleShortandCompany,jobLinkElement[0].get_attribute('href'),True)               #If already seen, create greyed button
     else:
-        window.my_frame.createBtn(jobTitleShort,jobLinkElement[0].get_attribute('href'))                    #If not seen, create blue button
-        jobFile.write(jobTitle + "\n")                                                                      #and write title to the seen jobs list
+        window.my_frame.createBtn(jobTitleShortandCompany,jobLinkElement[0].get_attribute('href'))                    #If not seen, create blue button
+        jobFile.write(jobTitleandCompany + "\n")                                                                      #and write title to the seen jobs list
     
 ### goes to next page of jobs if possible
 def nextPage(driver):
